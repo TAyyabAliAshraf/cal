@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌞 Solar Off-Grid Rechner</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Solarrechner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -12,30 +12,27 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #000000 0%, #FF8C00 100%);
+            font-family: 'Montserrat', sans-serif;
+            background: #ffffff;
             margin: 0;
             padding: 20px;
-            color: #000000;
+            color: #424141;
             min-height: 100vh;
             line-height: 1.6;
         }
         .header {
             text-align: center;
-            margin-bottom: 20px; /* Reduced from 30px */
+            margin-bottom: 20px;
         }
         .header h1 {
             font-size: clamp(1.8rem, 5vw, 2.5rem);
-            background: linear-gradient(45deg, #FFD700, #FF8C00, #FF4500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
             margin: 0;
             font-weight: 600;
+            color: #424141;
         }
         .header p {
             font-size: clamp(1rem, 3vw, 1.2rem);
-            color: #FFFFFF;
+            color: #424141;
             margin: 10px 0 0;
             max-width: 90%;
             margin-left: auto;
@@ -47,32 +44,26 @@
             max-width: 1400px;
             margin: 0 auto;
         }
-        .panel {
-            background: #FFFFFF;
-            padding: 30px;
-            border-radius: 0;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            border: 1px solid #000000;
+        .left-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
             flex: 1;
-            transition: all 0.3s ease;
-            height: auto; /* Ensure flexible height */
         }
-        .panel:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        .right-panel {
+            flex: 1;
+            height: auto;
         }
-        .left-panel { border-top: 4px solid #FF8C00; }
-        .right-panel { border-top: 4px solid #FFD700; }
         h2 {
-            color: #000000;
+            color: #424141;
             text-align: center;
-            margin-bottom: 15px; /* Reduced from 25px */
+            margin-bottom: 15px;
             font-weight: 500;
             font-size: clamp(1.2rem, 4vw, 1.6rem);
         }
         h3 {
-            color: #000000;
-            margin-bottom: 10px; /* Reduced from 15px */
+            color: #424141;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -81,8 +72,7 @@
         }
         .table-wrapper {
             overflow-x: auto;
-            margin-bottom: 15px; /* Reduced from 25px */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
         }
         table {
             width: 100%;
@@ -91,8 +81,8 @@
             min-width: 700px;
         }
         th {
-            background: linear-gradient(135deg, #FF8C00, #FF4500);
-            color: #FFFFFF;
+            background: #000000;
+            color: #ffffff;
             padding: 15px 12px;
             text-align: center;
             font-weight: 500;
@@ -105,38 +95,31 @@
             padding: 15px 12px;
             text-align: center;
             border-bottom: 1px solid #000000;
-            transition: background 0.2s;
             vertical-align: middle;
-        }
-        tr:hover td {
-            background: rgba(255, 140, 0, 0.05);
         }
         .device-name input[type="text"] {
             width: 100%;
             font-weight: 500;
             text-align: left;
-            color: #000000;
+            color: #424141;
             font-size: 0.95rem;
             padding: 10px 12px;
             border: 2px solid #000000;
             border-radius: 0;
-            background: #FFFFFF;
-            transition: all 0.3s;
+            background: #ffffff;
             margin: 0;
             word-wrap: break-word;
             white-space: normal;
         }
         .device-name input[type="text"]:focus {
             outline: none;
-            border-color: #FF8C00;
-            box-shadow: 0 0 0 4px rgba(255, 140, 0, 0.1);
-            transform: scale(1.02);
+            border-color: #ffc72c;
         }
         .total-row {
-            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            background: #000000;
             font-weight: 600;
             font-size: 1.1rem;
-            color: #000000;
+            color: #ffffff;
         }
         input[type="number"] {
             width: 70px;
@@ -145,48 +128,41 @@
             border-radius: 0;
             font-size: 1rem;
             font-family: inherit;
-            transition: all 0.3s;
-            background: #FFFFFF;
+            background: #ffffff;
             margin: 0;
-            color: #000000;
+            color: #424141;
         }
         input[type="number"]:focus {
             outline: none;
-            border-color: #FF8C00;
-            box-shadow: 0 0 0 4px rgba(255, 140, 0, 0.1);
-            transform: scale(1.02);
+            border-color: #ffc72c;
         }
         .section {
-            margin-bottom: 15px; /* Reduced from 25px */
+            margin-bottom: 15px;
             padding: 20px;
-            border: 3px solid #000000;
-            border-radius: 0;
-            background: linear-gradient(145deg, #FFFFFF, #f8f9fa);
-            box-shadow: 10px 10px 20px #000000, -10px -10px 20px #FFFFFF;
+            background: #ffffff;
         }
         label {
             display: block;
-            margin-bottom: 10px; /* Reduced from 15px */
+            margin-bottom: 10px;
             font-weight: 500;
             font-size: 1rem;
-            color: #000000;
+            color: #424141;
         }
         .options {
             display: flex;
             gap: 15px;
-            margin-top: 10px; /* Reduced from 15px */
+            margin-top: 10px;
             justify-content: center;
             flex-wrap: wrap;
         }
         .btn {
             padding: 12px 20px;
-            border: 3px solid #000000;
-            background: linear-gradient(145deg, #FFFFFF, #e6e6e6);
+            border: none;
+            background: #000000;
             cursor: pointer;
             font-weight: 500;
             font-size: 0.95rem;
             border-radius: 0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
             min-width: 120px;
@@ -195,34 +171,21 @@
             justify-content: center;
             gap: 8px;
             white-space: nowrap;
-            color: #000000;
-        }
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            color: #ffffff;
         }
         .btn.selected {
-            border-color: #FF8C00;
-            background: linear-gradient(145deg, #FF8C00, #FF4500);
-            color: #FFFFFF;
-            box-shadow: inset 5px 5px 10px rgba(0,0,0,0.1), 0 10px 20px rgba(255, 140, 0, 0.3);
-        }
-        .btn[data-type="lithium"].selected {
-            background: linear-gradient(145deg, #FF4500, #FF8C00);
-            border-color: #FF4500;
-            color: #FFFFFF;
-            box-shadow: inset 5px 5px 10px rgba(0,0,0,0.1), 0 10px 20px rgba(255, 69, 0, 0.3);
+            background: #ffc72c;
+            color: #000000;
         }
         .total-info {
-            background: linear-gradient(135deg, #FF8C00, #FF4500);
-            color: #FFFFFF;
+            background: #000000;
+            color: #ffffff;
             padding: 25px;
             border-radius: 0;
             text-align: center;
             font-size: 1.1rem;
             font-weight: 500;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            margin-top: 15px; /* Added for spacing after table */
+            margin-top: 15px;
         }
         .total-info strong {
             display: block;
@@ -233,7 +196,6 @@
             position: relative;
             height: 450px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
         #displayNet {
             font-size: 1.3rem !important;
@@ -245,114 +207,106 @@
         /* Responsive – Enhanced for Mobile */
         @media (max-width: 1024px) {
             .container { gap: 20px; }
-            .panel { padding: 25px; }
         }
         @media (max-width: 768px) {
             body { padding: 10px; }
-            .container { 
-                flex-direction: column; 
-                gap: 15px; /* Reduced from 20px */
+            .container {
+                flex-direction: column;
+                gap: 15px;
             }
-            .panel { 
-                padding: 15px; /* Reduced from 20px */
-                min-height: auto; /* Flexible height */
+            .header { margin-bottom: 15px; }
+            h2 {
+                font-size: 1.2rem;
+                margin-bottom: 10px;
             }
-            .header { margin-bottom: 15px; } /* Reduced */
-            h2 { 
-                font-size: 1.2rem; /* Reduced from 1.4rem */
-                margin-bottom: 10px; /* Reduced */
+            h3 {
+                font-size: 0.95rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+                margin-bottom: 8px;
             }
-            h3 { 
-                font-size: 0.95rem; /* Reduced */
-                flex-direction: column; 
-                align-items: flex-start; 
-                gap: 5px; 
-                margin-bottom: 8px; /* Reduced */
+            .table-wrapper {
+                margin-bottom: 10px;
+                -webkit-overflow-scrolling: touch;
             }
-            .table-wrapper { 
-                margin-bottom: 10px; /* Reduced */
-                -webkit-overflow-scrolling: touch; 
+            table {
+                font-size: 0.8rem;
+                min-width: 600px;
             }
-            table { 
-                font-size: 0.8rem; /* Reduced from 0.85rem */
-                min-width: 600px; 
+            th, td { padding: 8px 6px; }
+            .device-name input[type="text"] {
+                text-align: left;
+                margin: 1px 0;
+                font-size: 0.85rem;
+                padding: 8px 10px;
             }
-            th, td { padding: 8px 6px; } /* Reduced from 10px 8px */
-            .device-name input[type="text"] { 
-                text-align: left; 
-                margin: 1px 0; /* Reduced */
-                font-size: 0.85rem; /* Reduced */
-                padding: 8px 10px; /* Reduced */
+            .btn {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+                min-width: 90px;
+                flex: 1 1 auto;
+                max-width: 120px;
+                gap: 5px;
             }
-            .btn { 
-                padding: 8px 12px; /* Reduced from 10px 16px */
-                font-size: 0.85rem; /* Reduced */
-                min-width: 90px; /* Reduced from 100px */
-                flex: 1 1 auto; 
-                max-width: 120px; /* Reduced */
-                gap: 5px; /* Reduced */
+            .options {
+                gap: 8px;
+                margin-top: 8px;
             }
-            .options { 
-                gap: 8px; /* Reduced from 10px */
-                margin-top: 8px; /* Reduced */
+            .section {
+                padding: 12px;
+                margin-bottom: 10px;
             }
-            .section { 
-                padding: 12px; /* Reduced from 15px */
-                margin-bottom: 10px; /* Reduced */
+            label {
+                font-size: 0.9rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 3px;
+                margin-bottom: 8px;
             }
-            label { 
-                font-size: 0.9rem; /* Reduced from 0.95rem */
-                display: flex; 
-                flex-direction: column; 
-                align-items: center; 
-                gap: 3px; /* Reduced from 5px */
-                margin-bottom: 8px; /* Reduced */
-            }
-            input[type="number"] { 
-                width: 70px; /* Slightly reduced */
+            input[type="number"] {
+                width: 70px;
                 max-width: 100%;
-                padding: 8px 10px; /* Reduced */
-                font-size: 0.9rem; /* Reduced */
+                padding: 8px 10px;
+                font-size: 0.9rem;
             }
-            .total-info { 
-                padding: 15px; /* Reduced from 20px */
-                font-size: 0.95rem; /* Reduced */
-                margin-top: 10px; /* Adjusted */
+            .total-info {
+                padding: 15px;
+                font-size: 0.95rem;
+                margin-top: 10px;
             }
-            .total-info strong { 
-                font-size: 0.9rem; /* Reduced from 0.95rem */
-                margin-bottom: 5px; /* Reduced */
+            .total-info strong {
+                font-size: 0.9rem;
+                margin-bottom: 5px;
             }
-            #displayNet { font-size: 1.1rem !important; } /* Reduced from 1.2rem */
+            #displayNet { font-size: 1.1rem !important; }
             #chartContainer { height: 350px; }
         }
         @media (max-width: 480px) {
-            body { padding: 5px; } /* Further reduced */
+            body { padding: 5px; }
             .header { margin-bottom: 10px; }
-            .header h1 { font-size: 1.6rem; } /* Reduced from 1.8rem */
-            .panel { padding: 12px; } /* Reduced from 15px */
-            table { min-width: 500px; font-size: 0.75rem; } /* Further reduced */
-            th, td { padding: 6px 4px; } /* Reduced */
-            .btn { 
-                padding: 6px 10px; /* Reduced */
-                font-size: 0.8rem; 
-                min-width: 80px; /* Reduced */
+            table { min-width: 500px; font-size: 0.75rem; }
+            th, td { padding: 6px 4px; }
+            .btn {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+                min-width: 80px;
             }
-            .section { padding: 10px; } /* Reduced */
-            label { font-size: 0.85rem; } /* Reduced */
+            .section { padding: 10px; }
+            label { font-size: 0.85rem; }
             #chartContainer { height: 300px; }
-            .total-info { padding: 12px; } /* Reduced */
+            .total-info { padding: 12px; }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1><i class="fas fa-solar-panel"></i> Solar Off-Grid Rechner</h1>
-        <p>Berechne deine perfekte Solaranlage für Camper & Wohnmobil 🚐⚡</p>
+        <h1>Solarrechner</h1>
+        <p>Our solar calculator shows you the optimal combination of CALIFAKTUR solar module, battery and consumers — for maximum freedom, independence and flexibility. Calculate your ideal setup and get a sense of your energy needs. All values are guidelines and for orientation.</p>
     </div>
     <div class="container">
-        <div class="left-panel panel">
-            <h2><i class="fas fa-car-battery"></i> Batterie</h2>
+        <div class="left-container">
             <div class="section">
                 <h3><i class="fas fa-cog"></i> Batterietyp</h3>
                 <div class="options">
@@ -364,15 +318,11 @@
                     </button>
                 </div>
                 <label>
-                    Nennkapazität: <input type="number" id="batteryAh" value="75" min="1" step="1">
-                    <i class="fas fa-info-circle" title="12V System"></i> Ah
+                    Nennkapazität: <input type="number" id="batteryAh" value="75" min="1" step="1"> Ah
                 </label>
             </div>
             <div class="section">
                 <h3><i class="fas fa-solar-panel"></i> Solarmodul</h3>
-                <label>
-                    Modul: <span id="selectedWp" style="font-weight: 700; color: #FF8C00;">155</span> Wp
-                </label>
                 <label>
                     ☀️ Sonnensunden/Tag: <input type="number" id="sunHours" value="8" min="0" step="0.5">
                 </label>
@@ -416,9 +366,10 @@
                 <strong>Tagesverbrauch: <span id="displayConsume">0</span> Wh</strong>
                 <strong>🌞 Erzeugung: <span id="displayGen">0</span> Wh</strong>
                 <strong>⚡ Netto/Tag: <span id="displayNet">0</span> Wh</strong>
+                <strong>Tage autark: <span id="displayAutark">0</span> Tage</strong>
             </div>
         </div>
-        <div class="right-panel panel">
+        <div class="right-panel">
             <h2><i class="fas fa-chart-line"></i> Batterie SOC über 14 Tage</h2>
             <div id="chartContainer">
                 <canvas id="socChart"></canvas>
@@ -428,7 +379,7 @@
     <script>
         const SYSTEM_VOLTAGE = 12;
         const INVERTER_EFF = 0.85;
-        const SOLAR_EFF = 0.70;
+        const SOLAR_EFF = 0.75;
         const DOD_AGM = 0.50; // Depth of Discharge for AGM
         const DOD_LITHIUM = 0.90; // Depth of Discharge for LiFePO4
         const devices = [
@@ -479,11 +430,11 @@
                 const nameInput = document.querySelector(`[data-index="${index}"][data-type="name"]`);
                 const leistungInput = document.querySelector(`[data-index="${index}"][data-type="leistung"]`);
                 const laufzeitInput = document.querySelector(`[data-index="${index}"][data-type="laufzeit"]`);
-               
+              
                 device.name = nameInput ? nameInput.value : device.name;
                 device.leistung = parseFloat(leistungInput.value) || 0;
                 device.laufzeit = parseFloat(laufzeitInput.value) || 0;
-               
+              
                 const wh = device.leistung * device.laufzeit * device.duty;
                 document.getElementById(`wh-${index}`).textContent = Math.round(wh);
                 totalWh += wh;
@@ -499,8 +450,6 @@
         function selectSolarModule(e) {
             document.querySelectorAll('.btn[data-wp]').forEach(b => b.classList.remove('selected'));
             e.target.classList.add('selected');
-            document.getElementById('selectedWp').textContent = e.target.dataset.wp;
-            document.getElementById('selectedWp').style.color = '#FF8C00';
             updateChart();
         }
         function selectBatteryType(e) {
@@ -516,27 +465,31 @@
             const batWh = ah * SYSTEM_VOLTAGE;
             const dod = selectedBatteryType === 'lithium' ? DOD_LITHIUM : DOD_AGM;
             const usableBatWh = batWh * dod; // Nutzbare Kapazität berücksichtigen
-            const wpPer = parseFloat(document.getElementById('selectedWp').textContent) || 155;
+            const wpPer = parseFloat(document.querySelector('.btn[data-wp].selected').dataset.wp) || 155;
             const totalWp = wpPer; // Nur 1 Panel
             const sunHours = parseFloat(document.getElementById('sunHours').value) || 8;
             const genWh = totalWp * sunHours * SOLAR_EFF;
             const netWh = genWh - drainWh;
             document.getElementById('displayGen').textContent = Math.round(genWh);
             document.getElementById('displayNet').textContent = Math.round(netWh);
-            document.getElementById('displayNet').style.color = netWh >= 0 ? '#FFD700' : '#FF4500';
+            document.getElementById('displayNet').style.color = netWh >= 0 ? '#ffc72c' : '#ff0000';
+
+            const autarkDays = drainWh > 0 ? (Math.round((usableBatWh / drainWh) * 10) / 10) : '∞';
+            document.getElementById('displayAutark').textContent = autarkDays;
+
             const ctx = document.getElementById('socChart').getContext('2d');
             if (chart) chart.destroy();
             let soc = 100;
             const labels = [];
             const data = [];
-            labels.push('Tag 0');
+            labels.push('0');
             data.push(100);
             for (let day = 1; day <= 14; day++) {
                 soc = Math.max(0, Math.min(100, soc + (netWh / usableBatWh) * 100));
-                labels.push(`Tag ${day}`);
+                labels.push(`${day}`);
                 data.push(Math.round(soc * 10) / 10);
             }
-            const color = selectedBatteryType === 'lithium' ? '#FF4500' : '#FF8C00';
+            const color = '#ffa500';
             chart = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -550,7 +503,7 @@
                         fill: true,
                         tension: 0.4,
                         pointBackgroundColor: color,
-                        pointBorderColor: '#FFFFFF',
+                        pointBorderColor: '#ffffff',
                         pointBorderWidth: 3,
                         pointRadius: 6,
                         pointHoverRadius: 8
@@ -561,14 +514,32 @@
                     maintainAspectRatio: false,
                     scales: {
                         y: {
+                            title: {
+                                display: true,
+                                text: 'SOC %',
+                                color: '#424141',
+                                font: {
+                                    family: 'Montserrat',
+                                    size: 14
+                                }
+                            },
                             min: 0,
                             max: 100,
                             grid: { color: 'rgba(0,0,0,0.05)' },
-                            ticks: { color: '#000000', font: { size: 12 } }
+                            ticks: { color: '#424141', font: { family: 'Montserrat', size: 12 } }
                         },
                         x: {
+                            title: {
+                                display: true,
+                                text: 'Tage',
+                                color: '#424141',
+                                font: {
+                                    family: 'Montserrat',
+                                    size: 14
+                                }
+                            },
                             grid: { display: false },
-                            ticks: { color: '#000000', font: { size: 11 } }
+                            ticks: { color: '#424141', font: { family: 'Montserrat', size: 11 } }
                         }
                     },
                     plugins: {
