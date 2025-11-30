@@ -152,7 +152,7 @@
             display: flex;
             gap: 15px;
             margin-top: 10px;
-            justify-content: center;
+            justify-content: flex-start;
             flex-wrap: wrap;
         }
         .btn {
@@ -221,8 +221,7 @@
             }
             h3 {
                 font-size: 0.95rem;
-                flex-direction: column;
-                align-items: flex-start;
+                align-items: center;
                 gap: 5px;
                 margin-bottom: 8px;
             }
@@ -252,6 +251,7 @@
             .options {
                 gap: 8px;
                 margin-top: 8px;
+                justify-content: flex-start;
             }
             .section {
                 padding: 12px;
@@ -259,9 +259,8 @@
             }
             label {
                 font-size: 0.9rem;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
+                display: block;
+                align-items: flex-start;
                 gap: 3px;
                 margin-bottom: 8px;
             }
@@ -308,7 +307,10 @@
     <div class="container">
         <div class="left-container">
             <div class="section">
-                <h3><i class="fas fa-cog"></i> Batterietyp</h3>
+                <h3><i class="fas fa-battery-full"></i> Batterietyp</h3>
+                <label>
+                    Nennkapazität: <input type="number" id="batteryAh" value="75" min="1" step="1"> Ah
+                </label>
                 <div class="options">
                     <button class="btn" data-type="agm" title="AGM (DoD 50%)">
                         <i class="fas fa-battery-half"></i> AGM
@@ -317,14 +319,11 @@
                         <i class="fas fa-battery-full"></i> LiFePO4
                     </button>
                 </div>
-                <label>
-                    Nennkapazität: <input type="number" id="batteryAh" value="75" min="1" step="1"> Ah
-                </label>
             </div>
             <div class="section">
                 <h3><i class="fas fa-solar-panel"></i> Solarmodul</h3>
                 <label>
-                    ☀️ Sonnensunden/Tag: <input type="number" id="sunHours" value="8" min="0" step="0.5">
+                    ☀️ Sonnenstunden/Tag: <input type="number" id="sunHours" value="8" min="0" step="0.5">
                 </label>
                 <div class="options">
                     <button class="btn selected" data-wp="155" title="Kompakt">
@@ -474,7 +473,14 @@
             document.getElementById('displayNet').textContent = Math.round(netWh);
             document.getElementById('displayNet').style.color = netWh >= 0 ? '#ffc72c' : '#ff0000';
 
-            const autarkDays = drainWh > 0 ? (Math.round((usableBatWh / drainWh) * 10) / 10) : '∞';
+            let autarkDays;
+            if (netWh >= 0) {
+                autarkDays = '∞';
+            } else {
+                const deficit = -netWh;
+                autarkDays = Math.round((usableBatWh / deficit) * 10) / 10;
+                autarkDays = autarkDays.toString().replace('.', ',');
+            }
             document.getElementById('displayAutark').textContent = autarkDays;
 
             const ctx = document.getElementById('socChart').getContext('2d');
