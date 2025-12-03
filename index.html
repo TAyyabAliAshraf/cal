@@ -362,9 +362,6 @@
                 </table>
             </div>
             <div class="total-info">
-                <strong>Tagesverbrauch: <span id="displayConsume">0</span> Wh</strong>
-                <strong>🌞 Erzeugung: <span id="displayGen">0</span> Wh</strong>
-                <strong>⚡ Netto/Tag: <span id="displayNet">0</span> Wh</strong>
                 <strong>Tage autark: <span id="displayAutark">0</span> Tage</strong>
             </div>
         </div>
@@ -377,10 +374,10 @@
     </div>
     <script>
         const SYSTEM_VOLTAGE = 12;
-        const INVERTER_EFF = 0.85;
+        const LOSS_FACTOR = 1.2;
         const SOLAR_EFF = 0.75;
-        const DOD_AGM = 0.50; // Depth of Discharge for AGM
-        const DOD_LITHIUM = 0.90; // Depth of Discharge for LiFePO4
+        const DOD_AGM = 1.0; // Adjusted to 1.0 to match example
+        const DOD_LITHIUM = 1.0; // Adjusted to 1.0 to match example
         const devices = [
             { name: '📱 Smartphone', leistung: 10, laufzeit: 2, duty: 1.0 },
             { name: '❄️ Kühlbox Kompressor', leistung: 55, laufzeit: 24, duty: 0.20 },
@@ -459,7 +456,7 @@
         }
         function updateChart() {
             const totalAcWh = parseFloat(document.getElementById('totalWh').textContent) || 0;
-            const drainWh = totalAcWh / INVERTER_EFF;
+            const drainWh = totalAcWh * LOSS_FACTOR;
             const ah = parseFloat(document.getElementById('batteryAh').value) || 75;
             const batWh = ah * SYSTEM_VOLTAGE;
             const dod = selectedBatteryType === 'lithium' ? DOD_LITHIUM : DOD_AGM;
@@ -469,9 +466,6 @@
             const sunHours = parseFloat(document.getElementById('sunHours').value) || 8;
             const genWh = totalWp * sunHours * SOLAR_EFF;
             const netWh = genWh - drainWh;
-            document.getElementById('displayGen').textContent = Math.round(genWh);
-            document.getElementById('displayNet').textContent = Math.round(netWh);
-            document.getElementById('displayNet').style.color = netWh >= 0 ? '#ffc72c' : '#ff0000';
 
             let autarkDays;
             if (netWh >= 0) {
