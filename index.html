@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
         body {
             font-family: 'Montserrat', sans-serif;
             background: #ffffff;
@@ -20,283 +18,46 @@
             min-height: 100vh;
             line-height: 1.6;
         }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h1 { font-size: clamp(1.8rem, 5vw, 2.5rem); margin: 0; font-weight: 600; color: #424141; }
+        .header p { font-size: clamp(1rem, 3vw, 1.2rem); color: #424141; margin: 10px 0 0; max-width: 90%; margin-left: auto; margin-right: auto; }
+        .container { display: flex; gap: 30px; max-width: 1400px; margin: 0 auto; }
+        .left-container { display: flex; flex-direction: column; gap: 30px; flex: 1; }
+        .right-panel { flex: 1; height: auto; }
+        h2 { color: #424141; text-align: center; margin-bottom: 15px; font-weight: 500; font-size: clamp(1.2rem, 4vw, 1.6rem); }
+        h3 { color: #424141; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; font-size: 1.1rem; font-weight: 500; white-space: nowrap; }
+        .table-wrapper { overflow-x: auto; margin-bottom: 15px; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 700px; }
+        th { background: #000000; color: #ffffff; padding: 15px 12px; text-align: center; font-weight: 500; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+        td { padding: 15px 12px; text-align: center; border-bottom: 1px solid #000000; vertical-align: middle; }
+        .device-name input[type="text"] { width: 100%; font-weight: 500; text-align: left; color: #424141; font-size: 0.95rem; padding: 10px 12px; border: 2px solid #000000; border-radius: 0; background: #ffffff; margin: 0; }
+        .device-name input[type="text"]:focus { outline: none; border-color: #ffc72c; }
+        .total-row { background: #000000; font-weight: 600; font-size: 1.1rem; color: #ffffff; }
+        input[type="number"] { width: 70px; padding: 10px 12px; border: 2px solid #000000; border-radius: 0; font-size: 1rem; background: #ffffff; margin: 0; color: #424141; }
+        input[type="number"]:focus { outline: none; border-color: #ffc72c; }
+        .section { margin-bottom: 15px; padding: 20px; background: #ffffff; }
+        label { display: block; margin-bottom: 10px; font-weight: 500; font-size: 1rem; color: #424141; }
+        .options { display: flex; gap: 15px; margin-top: 10px; justify-content: flex-start; flex-wrap: wrap; }
+        .btn { padding: 12px 20px; border: none; background: #000000; cursor: pointer; font-weight: 500; font-size: 0.95rem; border-radius: 0; min-width: 120px; display: flex; align-items: center; justify-content: center; gap: 8px; color: #ffffff; }
+        .btn.selected { background: #ffc72c; color: #000000; }
+        .total-info { 
+            background: #000000; 
+            color: #ffffff; 
+            padding: 25px; 
+            border-radius: 0; 
+            text-align: center; 
+            font-size: 1.1rem; 
+            font-weight: 500; 
+            margin-top: 15px; 
         }
-        .header h1 {
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            margin: 0;
-            font-weight: 600;
-            color: #424141;
-        }
-        .header p {
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            color: #424141;
-            margin: 10px 0 0;
-            max-width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .container {
-            display: flex;
-            gap: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        .left-container {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            flex: 1;
-        }
-        .right-panel {
-            flex: 1;
-            height: auto;
-        }
-        h2 {
-            color: #424141;
-            text-align: center;
-            margin-bottom: 15px;
-            font-weight: 500;
-            font-size: clamp(1.2rem, 4vw, 1.6rem);
-        }
-        h3 {
-            color: #424141;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-        .table-wrapper {
-            overflow-x: auto;
-            margin-bottom: 15px;
-        }
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            min-width: 700px;
-        }
-        th {
-            background: #000000;
-            color: #ffffff;
-            padding: 15px 12px;
-            text-align: center;
-            font-weight: 500;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-        }
-        td {
-            padding: 15px 12px;
-            text-align: center;
-            border-bottom: 1px solid #000000;
-            vertical-align: middle;
-        }
-        .device-name input[type="text"] {
-            width: 100%;
-            font-weight: 500;
-            text-align: left;
-            color: #424141;
-            font-size: 0.95rem;
-            padding: 10px 12px;
-            border: 2px solid #000000;
-            border-radius: 0;
-            background: #ffffff;
-            margin: 0;
-            word-wrap: break-word;
-            white-space: normal;
-        }
-        .device-name input[type="text"]:focus {
-            outline: none;
-            border-color: #ffc72c;
-        }
-        .total-row {
-            background: #000000;
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: #ffffff;
-        }
-        input[type="number"] {
-            width: 70px;
-            padding: 10px 12px;
-            border: 2px solid #000000;
-            border-radius: 0;
-            font-size: 1rem;
-            font-family: inherit;
-            background: #ffffff;
-            margin: 0;
-            color: #424141;
-        }
-        input[type="number"]:focus {
-            outline: none;
-            border-color: #ffc72c;
-        }
-        .section {
-            margin-bottom: 15px;
-            padding: 20px;
-            background: #ffffff;
-        }
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 500;
-            font-size: 1rem;
-            color: #424141;
-        }
-        .options {
-            display: flex;
-            gap: 15px;
-            margin-top: 10px;
-            justify-content: flex-start;
-            flex-wrap: wrap;
-        }
-        .btn {
-            padding: 12px 20px;
-            border: none;
-            background: #000000;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.95rem;
-            border-radius: 0;
-            position: relative;
-            overflow: hidden;
-            min-width: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            white-space: nowrap;
-            color: #ffffff;
-        }
-        .btn.selected {
-            background: #ffc72c;
-            color: #000000;
-        }
-        .total-info {
-            background: #000000;
-            color: #ffffff;
-            padding: 25px;
-            border-radius: 0;
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-top: 15px;
-        }
-        .total-info strong {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 1rem;
-        }
-        #chartContainer {
-            position: relative;
-            height: 450px;
-            overflow: hidden;
-        }
-        #displayNet {
-            font-size: 1.3rem !important;
-            font-weight: 700 !important;
-        }
-        .icon {
-            font-size: 1.2rem;
-        }
-        /* Responsive – Enhanced for Mobile */
-        @media (max-width: 1024px) {
-            .container { gap: 20px; }
-        }
+        .total-info strong { display: block; margin-bottom: 10px; font-size: 1.5rem; }
+        #chartContainer { position: relative; height: 450px; overflow: hidden; }
+        /* Responsive */
         @media (max-width: 768px) {
-            body { padding: 10px; }
-            .container {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .header { margin-bottom: 15px; }
-            h2 {
-                font-size: 1.2rem;
-                margin-bottom: 10px;
-            }
-            h3 {
-                font-size: 0.95rem;
-                align-items: center;
-                gap: 5px;
-                margin-bottom: 8px;
-            }
-            .table-wrapper {
-                margin-bottom: 10px;
-                -webkit-overflow-scrolling: touch;
-            }
-            table {
-                font-size: 0.8rem;
-                min-width: 600px;
-            }
-            th, td { padding: 8px 6px; }
-            .device-name input[type="text"] {
-                text-align: left;
-                margin: 1px 0;
-                font-size: 0.85rem;
-                padding: 8px 10px;
-            }
-            .btn {
-                padding: 8px 12px;
-                font-size: 0.85rem;
-                min-width: 90px;
-                flex: 1 1 auto;
-                max-width: 120px;
-                gap: 5px;
-            }
-            .options {
-                gap: 8px;
-                margin-top: 8px;
-                justify-content: flex-start;
-            }
-            .section {
-                padding: 12px;
-                margin-bottom: 10px;
-            }
-            label {
-                font-size: 0.9rem;
-                display: block;
-                align-items: flex-start;
-                gap: 3px;
-                margin-bottom: 8px;
-            }
-            input[type="number"] {
-                width: 70px;
-                max-width: 100%;
-                padding: 8px 10px;
-                font-size: 0.9rem;
-            }
-            .total-info {
-                padding: 15px;
-                font-size: 0.95rem;
-                margin-top: 10px;
-            }
-            .total-info strong {
-                font-size: 0.9rem;
-                margin-bottom: 5px;
-            }
-            #displayNet { font-size: 1.1rem !important; }
+            .container { flex-direction: column; gap: 15px; }
+            .btn { padding: 8px 12px; font-size: 0.85rem; min-width: 90px; }
+            .options { gap: 8px; }
             #chartContainer { height: 350px; }
-        }
-        @media (max-width: 480px) {
-            body { padding: 5px; }
-            .header { margin-bottom: 10px; }
-            table { min-width: 500px; font-size: 0.75rem; }
-            th, td { padding: 6px 4px; }
-            .btn {
-                padding: 6px 10px;
-                font-size: 0.8rem;
-                min-width: 80px;
-            }
-            .section { padding: 10px; }
-            label { font-size: 0.85rem; }
-            #chartContainer { height: 300px; }
-            .total-info { padding: 12px; }
         }
     </style>
 </head>
@@ -308,50 +69,34 @@
     <div class="container">
         <div class="left-container">
             <div class="section">
-                <h3><i class="fas fa-battery-full"></i> Batterietyp</h3>
-                <label>
-                    Nennkapazität: <input type="number" id="batteryAh" value="75" min="1" step="1"> Ah
-                </label>
+                <h3>Batterietyp</h3>
+                <label>Nennkapazität: <input type="number" id="batteryAh" value="75" min="1" step="1"> Ah</label>
                 <div class="options">
-                    <button class="btn" data-type="agm" title="AGM (DoD 50%)">
-                        <i class="fas fa-battery-half"></i> AGM
-                    </button>
-                    <button class="btn selected" data-type="lithium" title="LiFePO4 (DoD 90%)">
-                        <i class="fas fa-battery-full"></i> LiFePO4
-                    </button>
+                    <button class="btn" data-type="agm">AGM</button>
+                    <button class="btn selected" data-type="lithium">LiFePO4</button>
                 </div>
             </div>
             <div class="section">
-                <h3><i class="fas fa-solar-panel"></i> Solarmodul</h3>
-                <label>
-                    ☀️ Sonnenstunden/Tag: <input type="number" id="sunHours" value="8" min="0" step="0.5">
-                </label>
+                <h3>Solarmodul</h3>
+                <label>Sonnenstunden/Tag: <input type="number" id="sunHours" value="8" min="0" step="0.5"></label>
                 <div class="options">
-                    <button class="btn selected" data-wp="155" title="Kompakt">
-                        <i class="fas fa-solar-panel"></i> 155 Wp
-                    </button>
-                    <button class="btn" data-wp="260" title="Standard">
-                        <i class="fas fa-solar-panel"></i> 260 Wp
-                    </button>
-                    <button class="btn" data-wp="310" title="Power">
-                        <i class="fas fa-solar-panel"></i> 310 Wp
-                    </button>
+                    <button class="btn selected" data-wp="130">130 Wp</button>
+                    <button class="btn" data-wp="155">155 Wp</button>
+                    <button class="btn" data-wp="260">260 Wp</button>
                 </div>
             </div>
-            <h2><i class="fas fa-plug"></i> Geräteverbrauch</h2>
+            <h2>Geräteverbrauch</h2>
             <div class="table-wrapper">
                 <table id="consumptionTable">
                     <thead>
                         <tr>
                             <th style="width: 40%;">Gerät</th>
-                            <th>Leistung<br><i class="fas fa-bolt"></i> W</th>
-                            <th>Laufzeit pro Tag<br><i class="far fa-clock"></i> h</th>
-                            <th>Tagesverbrauch<br><i class="fas fa-battery-full"></i> Wh</th>
+                            <th>Leistung<br>W</th>
+                            <th>Laufzeit pro Tag<br>h</th>
+                            <th>Tagesverbrauch<br>Wh</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- Rows populated by JS -->
-                    </tbody>
+                    <tbody></tbody>
                     <tfoot>
                         <tr class="total-row">
                             <td><strong>Gesamt</strong></td>
@@ -363,210 +108,168 @@
                 </table>
             </div>
             <div class="total-info">
-                <strong id="consumeRow">Tagesverbrauch: <span id="displayConsume">0</span> Wh</strong>
-                <strong id="genRow">🌞 Erzeugung: <span id="displayGen">0</span> Wh</strong>
-                <strong id="netRow">⚡ Netto/Tag: <span id="displayNet">0</span> Wh</strong>
-                <strong id="autarkRow">Tage autark: <span id="displayAutark">0</span> Tage</strong>
+                <strong><span id="displayAutark">0</span> Tage autark</strong> 
             </div>
         </div>
         <div class="right-panel">
-            <h2><i class="fas fa-chart-line"></i> Batterie SOC über 14 Tage</h2>
+            <h2>Batterie SOC über 14 Tage</h2>
             <div id="chartContainer">
                 <canvas id="socChart"></canvas>
             </div>
         </div>
     </div>
+
     <script>
-        const SYSTEM_VOLTAGE = 12;
-        const INVERTER_EFF = 0.833;
-        const SOLAR_EFF = 0.75;
-        const DOD_AGM = 0.50; // Depth of Discharge for AGM
-        const DOD_LITHIUM = 0.90; // Depth of Discharge for LiFePO4
+        // CORE CONSTANTS BASED ON CLIENT'S SPREADSHEET (1.png)
+        const SYSTEM_VOLTAGE = 10;
+        const SOLAR_YIELD_FACTOR = 0.625; 
+        
         const devices = [
-            { name: '📱 Smartphone', leistung: 10, laufzeit: 2, duty: 1.0 },
-            { name: '❄️ Kühlbox Kompressor', leistung: 55, laufzeit: 24, duty: 0.20 },
-            { name: '🔥 Standheizung', leistung: 56, laufzeit: 6, duty: 1.0 },
-            { name: '⚡ Verbraucher 4', leistung: 40, laufzeit: 2, duty: 1.0 },
-            { name: '🔌 Verbraucher 5', leistung: 30, laufzeit: 3, duty: 1.0 },
-            { name: '🔋 Verbraucher 6', leistung: 0, laufzeit: 0, duty: 1.0 }
-        ];
+            { name: 'Smartphone', leistung: 10, laufzeit: 2, duty: 1.0 },
+            { name: 'Kühlbox Kompressor', leistung: 55, laufzeit: 24, duty: 0.20 }, 
+            { name: 'Standheizung', leistung: 56, laufzeit: 6, duty: 1.0 }, 
+            { name: 'Verbraucher 4', leistung: 40, laufzeit: 2, duty: 1.0 }, 
+            { name: 'Verbraucher 5', leistung: 30, laufzeit: 3, duty: 1.0 }, 
+            { name: 'Verbraucher 6', leistung: 0, laufzeit: 0, duty: 1.0 }
+        ]; 
+        
         let chart;
-        let selectedBatteryType = 'lithium'; // Default to LiFePO4
+
         function initTable() {
             const tbody = document.querySelector('#consumptionTable tbody');
             tbody.innerHTML = '';
-            devices.forEach((device, index) => {
+            devices.forEach((device, i) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td class="device-name"><input type="text" data-index="${index}" data-type="name" value="${device.name}"></td>
-                    <td><input type="number" data-index="${index}" data-type="leistung" value="${device.leistung}" min="0" step="1"></td>
-                    <td><input type="number" data-index="${index}" data-type="laufzeit" value="${device.laufzeit}" min="0" step="0.1"></td>
-                    <td id="wh-${index}">0</td>
+                    <td class="device-name"><input type="text" data-index="${i}" data-type="name" value="${device.name}"></td>
+                    <td><input type="number" data-index="${i}" data-type="leistung" value="${device.leistung}" min="0" step="1"></td>
+                    <td><input type="number" data-index="${i}" data-type="laufzeit" value="${device.laufzeit}" min="0" step="0.1"></td>
+                    <td id="wh-${i}">0</td>
                 `;
                 tbody.appendChild(row);
             });
             attachEventListeners();
             updateCalculations();
         }
+
         function attachEventListeners() {
-            document.querySelectorAll('input[type="number"], input[type="text"]').forEach(input => {
-                input.addEventListener('input', updateCalculations);
-            });
-            document.querySelectorAll('.btn[data-wp]').forEach(btn => {
-                btn.addEventListener('click', selectSolarModule);
-            });
-            document.querySelectorAll('.btn[data-type]').forEach(btn => {
-                btn.addEventListener('click', selectBatteryType);
-            });
-            ['batteryAh', 'sunHours'].forEach(id => {
-                document.getElementById(id).addEventListener('input', updateChart);
-            });
+            document.querySelectorAll('input').forEach(input => input.addEventListener('input', updateCalculations));
+            
+            // Logic to handle Wp button selection and update calculations
+            document.querySelectorAll('.btn[data-wp]').forEach(btn => btn.addEventListener('click', e => {
+                document.querySelectorAll('.btn[data-wp]').forEach(b => b.classList.remove('selected'));
+                e.target.classList.add('selected');
+                updateCalculations();
+            }));
+            
+            // Logic to handle battery type selection and update calculations
+            document.querySelectorAll('.btn[data-type]').forEach(btn => btn.addEventListener('click', e => {
+                document.querySelectorAll('.btn[data-type]').forEach(b => b.classList.remove('selected'));
+                e.target.classList.add('selected');
+                updateCalculations();
+            }));
         }
+
         function updateCalculations() {
+            // --- 1. Consumption Calculation (in Wh) ---
             let totalWh = 0;
-            let totalP = 0;
-            let totalH = 0;
-            devices.forEach((device, index) => {
-                const nameInput = document.querySelector(`[data-index="${index}"][data-type="name"]`);
-                const leistungInput = document.querySelector(`[data-index="${index}"][data-type="leistung"]`);
-                const laufzeitInput = document.querySelector(`[data-index="${index}"][data-type="laufzeit"]`);
-              
-                device.name = nameInput ? nameInput.value : device.name;
-                device.leistung = parseFloat(leistungInput.value) || 0;
-                device.laufzeit = parseFloat(laufzeitInput.value) || 0;
-              
-                const wh = device.leistung * device.laufzeit * device.duty;
-                document.getElementById(`wh-${index}`).textContent = Math.round(wh);
+            devices.forEach((d, i) => {
+                const p = parseFloat(document.querySelector(`[data-index="${i}"][data-type="leistung"]`).value) || 0;
+                const h = parseFloat(document.querySelector(`[data-index="${i}"][data-type="laufzeit"]`).value) || 0;
+                const wh = p * h * d.duty;
+                document.getElementById(`wh-${i}`).textContent = Math.round(wh);
                 totalWh += wh;
-                totalP += device.leistung;
-                totalH += device.laufzeit;
             });
             document.getElementById('totalWh').textContent = Math.round(totalWh);
-            document.getElementById('totalPower').textContent = Math.round(totalP);
-            document.getElementById('totalHours').textContent = Math.round(totalH * 10) / 10;
-            document.getElementById('displayConsume').textContent = Math.round(totalWh);
-            updateChart();
-        }
-        function selectSolarModule(e) {
-            document.querySelectorAll('.btn[data-wp]').forEach(b => b.classList.remove('selected'));
-            e.target.classList.add('selected');
-            updateChart();
-        }
-        function selectBatteryType(e) {
-            document.querySelectorAll('.btn[data-type]').forEach(b => b.classList.remove('selected'));
-            e.target.classList.add('selected');
-            selectedBatteryType = e.target.dataset.type;
-            updateChart();
-        }
-        function updateChart() {
-            const totalAcWh = parseFloat(document.getElementById('totalWh').textContent) || 0;
-            const drainWh = totalAcWh / INVERTER_EFF;
-            const ah = parseFloat(document.getElementById('batteryAh').value) || 75;
-            const batWh = ah * SYSTEM_VOLTAGE;
-            const dod = selectedBatteryType === 'lithium' ? DOD_LITHIUM : DOD_AGM;
-            const usableBatWh = batWh * dod; // Nutzbare Kapazität berücksichtigen
-            const wpPer = parseFloat(document.querySelector('.btn[data-wp].selected').dataset.wp) || 155;
-            const totalWp = wpPer; // Nur 1 Panel
-            const sunHours = parseFloat(document.getElementById('sunHours').value) || 8;
-            const genWh = totalWp * sunHours * SOLAR_EFF;
-            const netWh = genWh - drainWh;
-            document.getElementById('displayGen').textContent = Math.round(genWh);
-            document.getElementById('displayNet').textContent = Math.round(netWh);
-            document.getElementById('displayNet').style.color = netWh >= 0 ? '#ffc72c' : '#ff0000';
 
-            let autarkDays;
-            if (netWh >= 0) {
-                autarkDays = '∞';
-            } else {
-                const deficit = -netWh;
-                autarkDays = Math.round((usableBatWh / deficit) * 10) / 10;
-                autarkDays = autarkDays.toString().replace('.', ',');
+            // --- 2. Conversion to Ah and Net Balance Calculation ---
+            const ahCapacity = parseFloat(document.getElementById('batteryAh').value) || 75;
+            // Get the currently selected Wp value (defaults to 130 Wp on load)
+            const wp = parseFloat(document.querySelector('.btn[data-wp].selected').dataset.wp) || 130;
+            const sun = parseFloat(document.getElementById('sunHours').value) || 8;
+            
+            // Consumed Ah (Tagesverbrauch in Ah) = TotalWh / 10V
+            const consumedAh = totalWh / SYSTEM_VOLTAGE; 
+            
+            // Solar Ah (Ertrag in Ah) = (Wp * Sun * 0.625) / 10V
+            const solarAh = (wp * sun * SOLAR_YIELD_FACTOR) / SYSTEM_VOLTAGE;
+            
+            // Net Daily Balance in Ah (Net Ah)
+            const netAh = solarAh - consumedAh; 
+
+            // --- 3. Autarky Days Calculation ---
+            let autarkDays = 'unendlich';
+            if (netAh < 0) {
+                // Days = Capacity Ah / |Net Ah|
+                const days = ahCapacity / Math.abs(netAh);
+                autarkDays = days.toFixed(1).replace('.', ','); 
             }
             document.getElementById('displayAutark').textContent = autarkDays;
 
-            const isInfiniteAutark = (netWh >= 0);
-            document.getElementById('consumeRow').style.display = isInfiniteAutark ? 'none' : 'block';
-            document.getElementById('genRow').style.display = isInfiniteAutark ? 'none' : 'block';
-            document.getElementById('netRow').style.display = isInfiniteAutark ? 'none' : 'block';
-            document.getElementById('autarkRow').style.display = 'block';
-
+            // --- 4. Chart Generation (SOC over 14 days) ---
             const ctx = document.getElementById('socChart').getContext('2d');
             if (chart) chart.destroy();
-            let soc = 100;
-            const labels = [];
-            const data = [];
-            labels.push('0');
-            data.push(100);
+            
+            // Start SOC at Ah capacity (75Ah)
+            let currentAh = ahCapacity;
+            
+            // Data for Chart.js (needs to be in %)
+            const labels = ['0'];
+            const data = [100]; // Start at 100%
+            
             for (let day = 1; day <= 14; day++) {
-                soc = Math.max(0, Math.min(100, soc + (netWh / usableBatWh) * 100));
-                labels.push(`${day}`);
-                data.push(Math.round(soc * 10) / 10);
+                currentAh = currentAh + netAh;
+                currentAh = Math.min(ahCapacity, Math.max(0, currentAh));
+                
+                const socPercent = (currentAh / ahCapacity) * 100;
+                
+                labels.push(day.toString());
+                data.push(Math.round(socPercent * 10) / 10);
             }
-            const color = '#ffa500';
+            
             chart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'SOC %',
                         data: data,
-                        borderColor: color,
-                        backgroundColor: `${color}20`,
+                        borderColor: '#ffa500',
+                        backgroundColor: 'rgba(255, 165, 0, 0.3)',
                         borderWidth: 5,
                         fill: true,
-                        tension: 0.4,
-                        pointBackgroundColor: color,
+                        tension: 0,
+                        pointBackgroundColor: '#ffa500',
                         pointBorderColor: '#ffffff',
                         pointBorderWidth: 3,
-                        pointRadius: 6,
-                        pointHoverRadius: 8
+                        pointRadius: 6
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'SOC %',
-                                color: '#424141',
-                                font: {
-                                    family: 'Montserrat',
-                                    size: 14
-                                }
-                            },
-                            min: 0,
-                            max: 100,
-                            grid: { color: 'rgba(0,0,0,0.05)' },
-                            ticks: { color: '#424141', font: { family: 'Montserrat', size: 12 } }
+                        y: { 
+                            min: 0, 
+                            max: 100, 
+                            title: { display: true, text: 'Batterieladestand in %', color: '#424141', font: { size: 14 } },
+                            ticks: { color: '#424141' }
                         },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Tage',
+                        x: { 
+                            title: { display: true, text: 'Tage autark', color: '#424141', font: { size: 14 } },
+                            ticks: { 
                                 color: '#424141',
-                                font: {
-                                    family: 'Montserrat',
-                                    size: 14
+                                callback: function(value, index, values) {
+                                    return index === 0 ? '' : labels[index];
                                 }
-                            },
-                            grid: { display: false },
-                            ticks: { color: '#424141', font: { family: 'Montserrat', size: 11 } }
+                            }
                         }
                     },
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    animation: {
-                        duration: 1000,
-                        easing: 'easeInOutQuart'
-                    }
+                    plugins: { legend: { display: false } }
                 }
             });
         }
+
         initTable();
-        updateChart();
     </script>
 </body>
 </html>
